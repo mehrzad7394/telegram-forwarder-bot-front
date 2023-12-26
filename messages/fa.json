@@ -1,0 +1,72 @@
+{
+  "NotFoundPage": {
+    "title": "404 پیدا نشد"
+  },
+  "header": {
+    "filters": "فیلترها",
+    "endings": "پایان یافتن",
+    "users": "کاربران",
+    "add": "جدید"
+  },
+  "login": {
+    "title": "وارد شدن",
+    "submit": "ارسال",
+    "enter-your-username": "نام کاربری خود را وارد کنید",
+    "enter-your-password": "رمز عبور خود را وارد کنید",
+    "password": "کلمه عبور",
+    "username": "نام کاربری"
+  },
+  "sidebar": {
+    "filters": "فیلترها",
+    "endings": "پایان یافتن",
+    "users": "کاربران",
+    "logout": "خروج"
+  },
+  "home": {
+    "select-a-menu": "یک منو انتخاب کنید"
+  },
+  "name": "",
+  "lastname": "",
+  "username": "",
+  "role": "",
+  "actions": "",
+  "users": {
+    "delete-user": "حذف کاربر",
+    "edit-user": "ویرایش کاربر",
+    "ID": "شناسه",
+    "name": "نام",
+    "lastname": "نام خانوادگی",
+    "username": "نام کاربری",
+    "role": "نقش",
+    "actions": "اقدامات",
+    "add-new-user": "کاربر جدید اضافه کنید",
+    "password": "کلمه عبور",
+    "enter-your-name": "اسمت را وارد کن",
+    "enter-your-lastname": "نام خانوادگی خود را وارد کنید",
+    "enter-your-username": "نام کاربری خود را وارد کنید",
+    "enter-your-password": "رمز عبور خود را وارد کنید",
+    "enter-your-chatID": "شناسه چت خود را وارد کنید",
+    "submit": "ارسال"
+  },
+  "add-new-user": "",
+  "edings": {
+    "add-new": ""
+  },
+  "endings": {
+    "actions": "اقدامات",
+    "text": "متن",
+    "edit": "ویرایش کنید",
+    "delete": "حذف",
+    "enter-your-text": "متن خود را وارد کنید",
+    "submit": "ارسال"
+  },
+  "filters": {
+    "add-new": "جدید اضافه کن",
+    "actions": "اقدامات",
+    "text": "متن",
+    "edit": "ویرایش کنید",
+    "delete": "حذف",
+    "submit": "ارسال",
+    "enter-your-text": "متن خود را وارد کنید"
+  }
+}

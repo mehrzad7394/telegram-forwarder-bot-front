@@ -6,22 +6,32 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --bgColor: #cec9c9;
 }
 
-@media (prefers-color-scheme: dark) {
+.dark,
+[data-theme="dark"] {
+  --bgColor: #374151;
+}
+/* @media (data-theme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
+    --bgColor: #374151;
   }
-}
+} */
 
 body {
-  color: rgb(var(--foreground-rgb));
+  color: white;
   background: linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+}
+
+.bgColor {
+  background: var(--bgColor);
 }

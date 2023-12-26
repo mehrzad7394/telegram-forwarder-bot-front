@@ -1,0 +1,69 @@
+{
+  "NotFoundPage": {
+    "title": "Not Found 404"
+  },
+  "header": {
+    "users": "Users",
+    "endings": "Ending",
+    "filters": "Filters",
+    "add": "Add"
+  },
+  "login": {
+    "title": "login",
+    "submit": "Submit",
+    "username": "username",
+    "password": "password",
+    "enter-your-email": "Enter your email",
+    "enter-your-username": "enter-your-username",
+    "enter-your-password": "enter-your-password"
+  },
+  "sidebar": {
+    "users": "Users",
+    "endings": "Ending",
+    "filters": "Filters",
+    "logout": "LogOut"
+  },
+  "home": {
+    "select-a-menu": "select a menu"
+  },
+  "users": {
+    "name": "NAME",
+    "lastname": "LASTNAME",
+    "username": "USERNAME",
+    "role": "ROLE",
+    "actions": "ACTIONS",
+    "delete-user": "Delete user",
+    "edit-user": "Edit-user",
+    "add-new-user": "add new user",
+    "ID": "ID",
+    "password": "password",
+    "enter-your-password": "Enter your password",
+    "enter-your-username": "Enter your username",
+    "enter-your-lastname": "Enter your lastname",
+    "enter-your-name": "Enter your name",
+    "chatID": "chatID",
+    "enter-your-chatID": "enter your chat ID",
+    "isadmin": "IsAdmin",
+    "yes": "yes",
+    "no": "no",
+    "submit": "submit"
+  },
+  "endings": {
+    "add-new": "add new",
+    "text": "text",
+    "actions": "actions",
+    "edit": "edit",
+    "delete": "delete",
+    "enter-your-text": "enter  your text",
+    "submit": "submit"
+  },
+  "filters": {
+    "add-new": "add new",
+    "text": "text",
+    "actions": "actions",
+    "edit": "edit",
+    "delete": "delete",
+    "enter-your-text": "enter your text",
+    "submit": "submit"
+  }
+}
