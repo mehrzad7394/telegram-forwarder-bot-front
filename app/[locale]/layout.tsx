@@ -4,11 +4,13 @@ import "./globals.css";
 import { Providers } from "./providers/providers";
 import { notFound } from "next/navigation";
 import localFont from "next/font/local";
+import { Toaster } from "react-hot-toast";
 export const metadata: Metadata = {
   title: "Telegram Forwarder Bot",
   description: "Telegram Forwarder Bot Front Website",
 };
 const myFont = localFont({ src: "../../public/fonts/IRANSans.ttf" });
+
 export default async function RootLayout({
   children,
   params,
@@ -30,7 +32,10 @@ export default async function RootLayout({
           locale === "fa" ? " text-right" : ""
         }`}
       >
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          <Toaster position="top-right" />
+        </Providers>
       </body>
     </html>
   );

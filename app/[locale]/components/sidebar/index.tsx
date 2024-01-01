@@ -6,10 +6,16 @@ import {
   MdPeople,
 } from "react-icons/md";
 import MenuLink from "./MenuLink";
-import { useTranslations } from "next-intl";
-import { Button } from "@nextui-org/react";
+import {
+  NextIntlClientProvider,
+  useMessages,
+  useTranslations,
+} from "next-intl";
+import Logout from "./Logout";
+import { pick } from "lodash";
 
 const Sidebar = () => {
+  const messages = useMessages();
   const t = useTranslations("sidebar");
   const menuItems = [
     {
@@ -49,7 +55,9 @@ const Sidebar = () => {
           </li>
         ))}
       </ul>
-      <Button color="danger" size="sm">{t("logout")}</Button>
+      <NextIntlClientProvider messages={pick(messages, "sidebar")}>
+        <Logout />
+      </NextIntlClientProvider>
     </div>
   );
 };

@@ -23,6 +23,9 @@ export function ThemeSwitcher() {
 
   return (
     <Switch
+      style={{
+        direction: "initial",
+      }}
       isSelected={theme === "dark"}
       size="lg"
       color="success"
