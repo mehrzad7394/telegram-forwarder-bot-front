@@ -39,7 +39,7 @@ export const login = async (formData: any) => {
     });
   if (result?.accessToken) {
     cookies().set("jwt", result.accessToken);
-    redirect("/")
+    redirect("/");
   } else {
     return result;
   }
@@ -62,4 +62,23 @@ export const addFilter = async (formData: any) => {
   try {
     console.log(text);
   } catch (error) {}
+};
+
+export const getUserInfo = async () => {
+  const jwt = cookies().get("jwt")?.value || "";
+  let config = {
+    method: "GET",
+    maxBodyLength: Infinity,
+    withCredentials: true,
+    url: `${baseURL}home`,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json",
+      token: jwt as string,
+    },
+  };
+  // await axios
+  //   .request(config)
+  //   .then((response) => console.log(response))
+  //   .catch((error) => console.log(error));
 };

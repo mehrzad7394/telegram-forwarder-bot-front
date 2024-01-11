@@ -1,7 +1,6 @@
 import createIntlMiddleware from "next-intl/middleware";
 import { defaultLocale } from "./utils/constants";
 import { NextRequest, NextResponse } from "next/server";
-// import { sessionStatus } from "./utils/session";
 import { locales, localePrefix, pathnames } from "./config";
 import { cookies } from "next/headers";
 
@@ -9,7 +8,6 @@ const protectedRoutes = [""];
 export default async function middleware(request: NextRequest) {
   const splitedPathname = request.nextUrl.pathname.split("/");
   const jwt = cookies().get("jwt");
-
   if (!jwt && `/${splitedPathname?.[2]}` !== "/login" && splitedPathname?.[1]) {
     const absoluteURL = new URL(
       `/${splitedPathname?.[1]}/login`,
@@ -41,5 +39,8 @@ export default async function middleware(request: NextRequest) {
 
 export const config = {
   // Match only internationalized pathnames
-  matcher: ["/", "/(fa|en)/:path*"],
+  // matcher: ["/", "/(fa|en)/:path*"],
+  matcher: [
+    '/((?!api|_next/static|_next/image|favicon.ico|apple-touch-icon.png|favicon.svg|images/books|icons|manifest).*)'
+  ]
 };
