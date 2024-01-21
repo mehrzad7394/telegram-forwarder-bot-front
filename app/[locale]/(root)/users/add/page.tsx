@@ -2,9 +2,13 @@ import CustomSelect from "@/components/customSelect/CustomSelect";
 import { addUser } from "@/lib/actions";
 import { Button, Input } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
+import { unstable_setRequestLocale } from "next-intl/server";
 import React from "react";
-
-const AddUser = () => {
+type Props = {
+  params: { locale: string };
+};
+const AddUser = ({ params: { locale } }: Props) => {
+  unstable_setRequestLocale(locale);
   const t = useTranslations("users");
   const options = [
     { key: true, value: "true", title: t("yes") },
@@ -57,7 +61,12 @@ const AddUser = () => {
           placeholder={t("enter-your-chatID")}
           fullWidth
         />
-        <CustomSelect options={options} title={t("isadmin")} name="isAdmin" isRequired/>
+        <CustomSelect
+          options={options}
+          title={t("isadmin")}
+          name="isAdmin"
+          isRequired
+        />
       </div>
       <Button color="primary" className="self-center w-1/6" type="submit">
         {t("submit")}

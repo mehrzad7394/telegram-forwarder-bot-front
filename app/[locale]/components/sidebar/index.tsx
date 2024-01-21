@@ -13,8 +13,13 @@ import {
 } from "next-intl";
 import Logout from "./Logout";
 import { pick } from "lodash";
+import { unstable_setRequestLocale } from "next-intl/server";
+type Props = {
+  params: { locale: string };
+};
 
 const Sidebar = () => {
+  // unstable_setRequestLocale(locale);
   const messages = useMessages();
   const t = useTranslations("sidebar");
   const menuItems = [

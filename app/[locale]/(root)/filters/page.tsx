@@ -8,8 +8,12 @@ import {
 import React from "react";
 import FiltersTable from "./components/FiltersTable";
 import { Link } from "@/navigation";
-
-const Filters = () => {
+import { unstable_setRequestLocale } from "next-intl/server";
+type Props = {
+  params: { locale: string };
+};
+const Filters = ({ params: { locale } }: Props) => {
+  unstable_setRequestLocale(locale);
   const t = useTranslations("filters");
   const messages = useMessages();
   return (

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import PageTitle from "./PageTitle";
 import { NextIntlClientProvider, useMessages } from "next-intl";
 import pick from "lodash/pick";
@@ -12,7 +12,9 @@ const Navbar = () => {
         <PageTitle />
       </NextIntlClientProvider>
       <div className="flex gap-3">
-        <LanguageDropdown />
+        <Suspense fallback={<></>}>
+          <LanguageDropdown />
+        </Suspense>
         <ThemeSwitcher />
       </div>
     </nav>

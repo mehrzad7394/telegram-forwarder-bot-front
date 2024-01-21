@@ -1,6 +1,7 @@
 const withNextIntl = require("next-intl/plugin")();
 
-module.exports = withNextIntl({
+const config = {
   reactStrictMode: false,
-  // Other Next.js configuration ...
-});
+};
+
+module.exports = withNextIntl(config);

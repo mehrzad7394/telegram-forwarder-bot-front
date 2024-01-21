@@ -1,4 +1,7 @@
 {
+  "LocaleLayout": {
+    "title": "Telegram Forwarder Bot"
+  },
   "NotFoundPage": {
     "title": "404 پیدا نشد"
   },
@@ -14,7 +17,8 @@
     "enter-your-username": "نام کاربری خود را وارد کنید",
     "enter-your-password": "رمز عبور خود را وارد کنید",
     "password": "کلمه عبور",
-    "username": "نام کاربری"
+    "username": "نام کاربری",
+    "enter-your-email": "ایمیل خود را وارد کنید"
   },
   "sidebar": {
     "filters": "فیلترها",
@@ -25,11 +29,6 @@
   "home": {
     "select-a-menu": "یک منو انتخاب کنید"
   },
-  "name": "",
-  "lastname": "",
-  "username": "",
-  "role": "",
-  "actions": "",
   "users": {
     "delete-user": "حذف کاربر",
     "edit-user": "ویرایش کاربر",
@@ -46,11 +45,11 @@
     "enter-your-username": "نام کاربری خود را وارد کنید",
     "enter-your-password": "رمز عبور خود را وارد کنید",
     "enter-your-chatID": "شناسه چت خود را وارد کنید",
-    "submit": "ارسال"
-  },
-  "add-new-user": "",
-  "edings": {
-    "add-new": ""
+    "submit": "ارسال",
+    "chatID": "شناسه چت",
+    "isadmin": "IsAdmin",
+    "no": "نه",
+    "yes": "آره"
   },
   "endings": {
     "actions": "اقدامات",
@@ -58,7 +57,8 @@
     "edit": "ویرایش کنید",
     "delete": "حذف",
     "enter-your-text": "متن خود را وارد کنید",
-    "submit": "ارسال"
+    "submit": "ارسال",
+    "add-new": "جدید اضافه کن"
   },
   "filters": {
     "add-new": "جدید اضافه کن",

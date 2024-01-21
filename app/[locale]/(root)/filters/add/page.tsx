@@ -1,9 +1,13 @@
 import { addFilter } from "@/lib/actions";
 import { Button, Input } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
+import { unstable_setRequestLocale } from "next-intl/server";
 import React from "react";
-
-const AddFilter = () => {
+type Props = {
+  params: { locale: string };
+};
+const AddFilter = ({ params: { locale } }: Props) => {
+  unstable_setRequestLocale(locale);
   const t = useTranslations("filters");
   return (
     <form className="flex flex-col gap-4 w-full" action={addFilter}>

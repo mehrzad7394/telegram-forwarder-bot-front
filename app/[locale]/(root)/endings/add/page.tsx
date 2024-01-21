@@ -1,9 +1,13 @@
 import { addEnding } from "@/lib/actions";
 import { Button, Textarea } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
+import { unstable_setRequestLocale } from "next-intl/server";
 import React from "react";
-
-const AddEnding = () => {
+type Props = {
+  params: { locale: string };
+};
+const AddEnding = ({ params: { locale } }: Props) => {
+  unstable_setRequestLocale(locale);
   const t = useTranslations("endings");
   return (
     <form className="flex flex-col gap-4 w-full" action={addEnding}>

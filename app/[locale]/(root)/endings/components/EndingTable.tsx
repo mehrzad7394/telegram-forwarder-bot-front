@@ -29,7 +29,7 @@ const EndingTable = () => {
   ];
 
   return (
-    <Table>
+    <Table aria-label="Example static collection table">
       <TableHeader>
         {columns?.map(({ name, title }) => (
           <TableColumn className="text-center" key={name}>

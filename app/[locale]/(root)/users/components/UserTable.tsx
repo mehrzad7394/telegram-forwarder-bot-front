@@ -65,7 +65,7 @@ const UserTable = () => {
   ];
 
   return (
-    <Table fullWidth>
+    <Table aria-label="Example static collection table" fullWidth>
       <TableHeader>
         {columns?.map(({ name, title }) => (
           <TableColumn className="text-center" key={name}>

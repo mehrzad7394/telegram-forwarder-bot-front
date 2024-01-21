@@ -23,6 +23,7 @@ export function ThemeSwitcher() {
 
   return (
     <Switch
+      aria-label="theme switcher"
       style={{
         direction: "initial",
       }}

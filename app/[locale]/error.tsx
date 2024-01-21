@@ -1,18 +1,29 @@
 "use client";
 
-export default function Error({
-  error,
-  reset,
-}: {
-  error: String;
-  reset: () => void;
-}) {
+// import { useTranslations } from "next-intl";
+import { useEffect } from "react";
+
+type Props = {
+  error: Error;
+  reset(): void;
+};
+
+export default function Error({ error, reset }: Props) {
   // const t = useTranslations('Error');
+
+  useEffect(() => {
+    console.error(error);
+  }, [error]);
 
   return (
     <div>
-      <h1>title</h1>
-      <button onClick={reset}>retry</button>
+      <button
+        className="text-white underline underline-offset-2"
+        onClick={reset}
+        type="button"
+      >
+        reset
+      </button>
     </div>
   );
 }

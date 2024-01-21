@@ -1,10 +1,18 @@
 import { ThemeSwitcher } from "@/components/themeSwitcher";
-import { NextIntlClientProvider, useMessages } from "next-intl";
+import {
+  NextIntlClientProvider,
+  useMessages,
+} from "next-intl";
 import React from "react";
-import Form from "./component/Form";
+import { unstable_setRequestLocale } from "next-intl/server";
+import LoginForm from "@/components/loginForm/LoginForm";
 import { pick } from "lodash";
+type Props = {
+  params: { locale: string };
+};
 
-const Login = () => {
+const Login = ({ params: { locale } }: Props) => {
+  unstable_setRequestLocale(locale);
   const messages = useMessages();
 
   return (
@@ -13,7 +21,7 @@ const Login = () => {
         <ThemeSwitcher />
       </div>
       <NextIntlClientProvider messages={pick(messages, "login")}>
-        <Form />
+        <LoginForm />
       </NextIntlClientProvider>
     </div>
   );

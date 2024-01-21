@@ -1,4 +1,3 @@
-import { getUserInfo } from "@/lib/actions";
 import Footer from "../components/footer";
 import Navbar from "../components/navbar";
 import Sidebar from "../components/sidebar";
@@ -8,8 +7,6 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  
-  // const userInfo = await getUserInfo();
   return (
     <div className="flex h-screen md:h-full flex-row">
       <div className="hidden w-[300px] md:block bgColor min-h-screen">

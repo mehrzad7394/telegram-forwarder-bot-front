@@ -8,8 +8,13 @@ import pick from "lodash/pick";
 import UserTable from "./components/UserTable";
 import { Button } from "@nextui-org/react";
 import { Link } from "@/navigation";
+import { unstable_setRequestLocale } from "next-intl/server";
+type Props = {
+  params: { locale: string };
+};
 
-const Users = () => {
+const Users = ({ params: { locale } }: Props) => {
+  unstable_setRequestLocale(locale);
   const t = useTranslations("users");
   const messages = useMessages();
   return (

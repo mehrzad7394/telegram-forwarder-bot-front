@@ -3,15 +3,21 @@ import { redirect } from "@/navigation";
 import axios from "axios";
 import { cookies } from "next/headers";
 const baseURL = "http://localhost:5000/api/";
-export const login = async (formData: any) => {
+
+export type FormState = {
+  errors: {
+    message: undefined;
+  };
+};
+export const login = async (prevState: FormState, formData: FormData) => {
   const { username, password } = Object.fromEntries(formData);
   let data = JSON.stringify({
     username,
     password,
   });
+
   let config = {
     method: "post",
-    maxBodyLength: Infinity,
     url: `${baseURL}auth/login`,
     headers: {
       "Content-Type": "application/json",
@@ -29,11 +35,13 @@ export const login = async (formData: any) => {
     .catch((error: any) => {
       if (error?.response?.data?.error) {
         return {
-          error: error?.response.data.error,
+          errors: {
+            message: error?.response.data.error,
+          },
         };
       } else {
         return {
-          error: error?.message,
+          errors: { message: error?.message },
         };
       }
     });

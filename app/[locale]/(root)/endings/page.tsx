@@ -8,8 +8,12 @@ import {
 import React from "react";
 import EndingTable from "./components/EndingTable";
 import { Link } from "@/navigation";
-
-const Endings = () => {
+import { unstable_setRequestLocale } from "next-intl/server";
+type Props = {
+  params: { locale: string };
+};
+const Endings = ({ params: { locale } }: Props) => {
+  unstable_setRequestLocale(locale);
   const t = useTranslations("endings");
   const messages = useMessages();
   return (

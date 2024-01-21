@@ -1,4 +1,7 @@
 {
+  "LocaleLayout": {
+    "title": "Telegram Forwarder Bot"
+  },
   "NotFoundPage": {
     "title": "Not Found 404"
   },
