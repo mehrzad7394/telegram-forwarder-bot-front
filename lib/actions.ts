@@ -1,15 +1,17 @@
 "use server";
 import { redirect } from "@/navigation";
+import { baseURL } from "@/utils/constants";
 import axios from "axios";
+import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
-const baseURL = "http://localhost:5000/api/";
 
 export type FormState = {
   errors: {
     message: undefined;
   };
 };
-export const login = async (prevState: FormState, formData: FormData) => {
+export async function login(prevState: FormState, formData: FormData) {
+  "use server";
   const { username, password } = Object.fromEntries(formData);
   let data = JSON.stringify({
     username,
@@ -51,13 +53,55 @@ export const login = async (prevState: FormState, formData: FormData) => {
   } else {
     return result;
   }
-};
-export const addUser = async (formData: any) => {
-  const { name, lastname, username, password, chatID, isAdmin } =
+}
+export const addUser = async (prevState: FormState, formData: FormData) => {
+  "use server";
+  const jwt = cookies().get("jwt")?.value || "";
+  const { name, lastname, username, password, userID, isAdmin } =
     Object.fromEntries(formData);
-  try {
-    console.log(name, lastname, username, password, chatID, isAdmin);
-  } catch (error) {}
+  let data = JSON.stringify({
+    name,
+    lastname,
+    username,
+    password,
+    userID,
+    isAdmin,
+  });
+
+  let config = {
+    method: "post",
+    url: `${baseURL}user`,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json",
+      token: jwt as string,
+    },
+
+    data: data,
+  };
+  const result = await axios
+    .request(config)
+    .then((response) => {
+      if (response.status === 200 || response.status === 201) {
+        redirect("/users");
+        revalidatePath("/users");
+      }
+    })
+    .catch((error: any) => {
+      if (error?.response?.data?.error) {
+        return {
+          errors: {
+            message: error?.response.data.error,
+          },
+        };
+      } else {
+        return {
+          errors: { message: error?.message },
+        };
+      }
+    });
+
+  return result;
 };
 export const addEnding = async (formData: any) => {
   const { text } = Object.fromEntries(formData);
@@ -72,11 +116,12 @@ export const addFilter = async (formData: any) => {
   } catch (error) {}
 };
 
-export const getUserInfo = async () => {
+export async function getUserInfo() {
+  "use server";
+
   const jwt = cookies().get("jwt")?.value || "";
   let config = {
     method: "GET",
-    maxBodyLength: Infinity,
     withCredentials: true,
     url: `${baseURL}home`,
     headers: {
@@ -85,8 +130,141 @@ export const getUserInfo = async () => {
       token: jwt as string,
     },
   };
-  // await axios
-  //   .request(config)
-  //   .then((response) => console.log(response))
-  //   .catch((error) => console.log(error));
-};
+
+  const result = await axios
+    .request(config)
+    .then((response) => {
+      if (response.data) {
+        return response.data;
+      }
+    })
+    .catch((error: any) => {
+      if (error?.response?.data?.error) {
+        return {
+          errors: {
+            message: error?.response.data.error,
+            status: error?.response?.status,
+          },
+        };
+      } else {
+        return {
+          errors: { status: error?.response?.status },
+        };
+      }
+    });
+  return result;
+}
+export async function getUsers() {
+  "use server";
+
+  const jwt = cookies().get("jwt")?.value || "";
+  let config = {
+    method: "GET",
+    withCredentials: true,
+    url: `${baseURL}user`,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json",
+      token: jwt as string,
+    },
+  };
+
+  const result = await axios
+    .request(config)
+    .then((response) => {
+      if (response.data) {
+        return response.data;
+      }
+    })
+    .catch((error: any) => {
+      if (error?.response?.data?.error) {
+        return {
+          errors: {
+            message: error?.response.data.error,
+            status: error?.response?.status,
+          },
+        };
+      } else {
+        return {
+          errors: { status: error?.response?.status },
+        };
+      }
+    });
+  return result;
+}
+export async function getEnds() {
+  "use server";
+
+  const jwt = cookies().get("jwt")?.value || "";
+  let config = {
+    method: "GET",
+    withCredentials: true,
+    url: `${baseURL}end`,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json",
+      token: jwt as string,
+    },
+  };
+
+  const result = await axios
+    .request(config)
+    .then((response) => {
+      if (response.data) {
+        return response.data;
+      }
+    })
+    .catch((error: any) => {
+      if (error?.response?.data?.error) {
+        return {
+          errors: {
+            message: error?.response.data.error,
+            status: error?.response?.status,
+          },
+        };
+      } else {
+        return {
+          errors: { status: error?.response?.status },
+        };
+      }
+    });
+  return result;
+}
+export async function getFilters() {
+  "use server";
+
+  const jwt = cookies().get("jwt")?.value || "";
+  let config = {
+    method: "GET",
+    withCredentials: true,
+    url: `${baseURL}filters`,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json",
+      token: jwt as string,
+    },
+  };
+
+  const result = await axios
+    .request(config)
+    .then((response) => {
+      if (response.data) {
+        return response.data;
+      }
+    })
+    .catch((error: any) => {
+      if (error?.response?.data?.error) {
+        return {
+          errors: {
+            message: error?.response.data.error,
+            status: error?.response?.status,
+          },
+        };
+      } else {
+        return {
+          errors: { status: error?.response?.status },
+        };
+      }
+    });
+  return result;
+}

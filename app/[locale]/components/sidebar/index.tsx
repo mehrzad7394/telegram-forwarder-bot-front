@@ -13,12 +13,12 @@ import {
 } from "next-intl";
 import Logout from "./Logout";
 import { pick } from "lodash";
-import { unstable_setRequestLocale } from "next-intl/server";
+
 type Props = {
   params: { locale: string };
 };
 
-const Sidebar = () => {
+const Sidebar = ({ name, lastname }: { name?: string; lastname?: string }) => {
   // unstable_setRequestLocale(locale);
   const messages = useMessages();
   const t = useTranslations("sidebar");
@@ -50,7 +50,7 @@ const Sidebar = () => {
           className="rounded-full object-contain"
         />
         <div className="font-medium text-sm tracking-normal">
-          Mehrzad Ardeshiri
+          {`${name || ""} ${lastname || ""}`}
         </div>
       </div>
       <ul>

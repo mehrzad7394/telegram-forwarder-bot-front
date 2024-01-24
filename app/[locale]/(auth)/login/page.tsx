@@ -1,8 +1,5 @@
 import { ThemeSwitcher } from "@/components/themeSwitcher";
-import {
-  NextIntlClientProvider,
-  useMessages,
-} from "next-intl";
+import { NextIntlClientProvider, useMessages } from "next-intl";
 import React from "react";
 import { unstable_setRequestLocale } from "next-intl/server";
 import LoginForm from "@/components/loginForm/LoginForm";

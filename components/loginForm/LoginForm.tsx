@@ -5,6 +5,7 @@ import { useFormState, useFormStatus } from "react-dom";
 import LanguageDropdown from "../languageDropdown";
 import { useTranslations } from "next-intl";
 import { Button, Input } from "@nextui-org/react";
+import toast from "react-hot-toast";
 
 const LoginForm = () => {
   const [state, formAction] = useFormState(login, {
@@ -12,8 +13,10 @@ const LoginForm = () => {
       message: undefined,
     },
   } as FormState);
-  const { pending } = useFormStatus();
   const t = useTranslations("login");
+  if (state?.errors?.message) {
+    toast.error(state?.errors?.message);
+  }
   return (
     <form
       className="w-full  mx-auto flex items-center justify-center flex-col bg-slate-500 rounded-2xl gap-5 p-10 md:w-1/3 lg:w-1/4 relative"
@@ -38,12 +41,18 @@ const LoginForm = () => {
         type="password"
         isRequired
       />
-      <Button fullWidth type="submit" isDisabled={pending}>
-        {t("submit")}
-      </Button>
-      {state?.errors?.message}
+      <SubmitButton title={t("submit")} />
     </form>
   );
 };
 
 export default LoginForm;
+
+export function SubmitButton({ title }: { title: string }) {
+  const { pending } = useFormStatus();
+  return (
+    <Button fullWidth type="submit" isDisabled={pending}>
+      {pending ? `${title}...` : title}
+    </Button>
+  );
+}

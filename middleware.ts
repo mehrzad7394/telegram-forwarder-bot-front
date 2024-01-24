@@ -4,25 +4,64 @@ import { NextRequest, NextResponse } from "next/server";
 import { locales, localePrefix, pathnames } from "./config";
 import { cookies } from "next/headers";
 
-const protectedRoutes = [""];
-export default async function middleware(request: NextRequest) {
-  // const splitedPathname = request.nextUrl.pathname.split("/");
-  // const jwt = cookies().get("jwt");
-  // if (!jwt && `/${splitedPathname?.[2]}` !== "/login" && splitedPathname?.[1]) {
-  //   const absoluteURL = new URL(
-  //     `/${splitedPathname?.[1]}/login`,
-  //     request.nextUrl.origin
-  //   );
-  //   return NextResponse.redirect(absoluteURL.toString());
-  // }
-  // if (!jwt && protectedRoutes.includes(`/${splitedPathname?.[2]}`)) {
-  //   const absoluteURL = new URL("/", request.nextUrl.origin);
-  //   return NextResponse.redirect(absoluteURL.toString());
-  // }
-  // if (jwt && splitedPathname?.[2] === "login") {
-  //   const absoluteURL = new URL("/", request.nextUrl.origin);
-  //   return NextResponse.redirect(absoluteURL.toString());
-  // }
+const protectedRoutes = [
+  "",
+  // "/",
+  // "/endings",
+  // "/filters",
+  // "/users",
+  // "/users/add",
+  // "/endings/add",
+  // "/filters/add",
+];
+const verifyJWT = async (jwt: any) => {
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = JSON.stringify({
+    token: jwt,
+  });
+  return await fetch("http://localhost:5000/api/verify", {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+  })
+    .then((res) => {
+      return res.ok;
+    })
+    .catch((err) => {
+      return false;
+    });
+};
+export default async function middleware(req: NextRequest) {
+  const splitedPathname = req.nextUrl.pathname.split("/");
+  const jwt = cookies().get("jwt");
+  if (!jwt && `/${splitedPathname?.[2]}` !== "/login" && splitedPathname?.[1]) {
+    const absoluteURL = new URL(
+      `/${splitedPathname?.[1]}/login`,
+      req.nextUrl.origin
+    );
+    return NextResponse.redirect(absoluteURL.toString());
+  }
+  if (
+    jwt &&
+    splitedPathname?.[2] === "login" &&
+    (await verifyJWT(jwt?.value))
+  ) {
+    const absoluteURL = new URL("/", req.nextUrl.origin);
+    return NextResponse.redirect(absoluteURL.toString());
+  }
+  if (
+    jwt &&
+    splitedPathname?.[2] !== "login" &&
+    !(await verifyJWT(jwt?.value))
+  ) {
+    const absoluteURL = new URL(
+      `/${splitedPathname?.[1]}/login`,
+      req.nextUrl.origin
+    );
+    return NextResponse.redirect(absoluteURL.toString());
+  }
 
   const handleI18nRouting = createIntlMiddleware({
     locales,
@@ -31,7 +70,7 @@ export default async function middleware(request: NextRequest) {
     localeDetection: true,
     pathnames,
   });
-  const response = handleI18nRouting(request);
+  const response = handleI18nRouting(req);
   response.headers.set("x-your-custom-locale", defaultLocale);
 
   return response;

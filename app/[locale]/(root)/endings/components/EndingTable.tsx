@@ -5,29 +5,18 @@ import {
   TableColumn,
   TableBody,
   TableRow,
-  TableCell,
-  Tooltip,
-} from "@nextui-org/react";
-import { useTranslations } from "next-intl";
+  TableCell,} from "@nextui-org/react";
 import { DeleteIcon } from "@/components/icons/DeleteIcon";
 import { EditIcon } from "@/components/icons/EditIcon";
-const users = [
-  {
-    id: 1,
-    title: "Tony Reichert",
-  },
-  {
-    id: 2,
-    title: "Zoey Lang",
-  },
-];
-const EndingTable = () => {
-  const t = useTranslations("endings");
-  const columns = [
-    { name: "TEXT", title: t("text") },
-    { name: "ACTIONS", title: t("actions") },
-  ];
+type propTypes = {
+  columns: Array<{ name: string; title: string }>;
+  data: Array<{
+    id: string;
+    value: string;
+  }>;
+};
 
+const EndingTable = ({ columns, data }: propTypes) => {
   return (
     <Table aria-label="Example static collection table">
       <TableHeader>
@@ -38,20 +27,17 @@ const EndingTable = () => {
         ))}
       </TableHeader>
       <TableBody>
-        {users?.map((user, i) => (
-          <TableRow key={user?.id}>
-            <TableCell className="text-center">{user?.title}</TableCell>
+        {data?.map((user, i) => (
+          <TableRow key={i}>
+            <TableCell className="text-center">{user?.value}</TableCell>
             <TableCell className="text-center flex justify-center items-center gap-5">
-              <Tooltip color="danger" content={t("edit")}>
-                <span className="text-lg text-orange-400 cursor-pointer active:opacity-50">
-                  <EditIcon />
-                </span>
-              </Tooltip>
-              <Tooltip color="danger" content={t("delete")}>
-                <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                  <DeleteIcon />
-                </span>
-              </Tooltip>
+              <span className="text-lg text-orange-400 cursor-pointer active:opacity-50">
+                <EditIcon />
+              </span>
+
+              <span className="text-lg text-danger cursor-pointer active:opacity-50">
+                <DeleteIcon />
+              </span>
             </TableCell>
           </TableRow>
         ))}

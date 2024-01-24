@@ -1,30 +1,32 @@
 import React from "react";
-import {
-  NextIntlClientProvider,
-  useMessages,
-  useTranslations,
-} from "next-intl";
-import pick from "lodash/pick";
 import UserTable from "./components/UserTable";
 import { Button } from "@nextui-org/react";
 import { Link } from "@/navigation";
-import { unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { getUsers } from "@/lib/actions";
 type Props = {
   params: { locale: string };
 };
 
-const Users = ({ params: { locale } }: Props) => {
+const Users = async ({ params: { locale } }: Props) => {
   unstable_setRequestLocale(locale);
-  const t = useTranslations("users");
-  const messages = useMessages();
+  const t = await getTranslations("users");
+  const users = await getUsers();
+  const columns = [
+    { name: "NAME", title: t("name") },
+    { name: "LASTNAME", title: t("lastname") },
+    { name: "USERNAME", title: t("username") },
+    { name: "USERID", title: t("ID") },
+    { name: "ROLE", title: t("role") },
+    { name: "ACTIONS", title: t("actions") },
+  ];
   return (
     <div className="flex-1 flex flex-col gap-5">
       <Button color="primary" className="self-start" size="sm">
         <Link href={"/users/add"}> {t("add-new-user")}</Link>
       </Button>
-      <NextIntlClientProvider messages={pick(messages, "users")}>
-        <UserTable />
-      </NextIntlClientProvider>
+
+      <UserTable columns={columns} data={users} />
     </div>
   );
 };
