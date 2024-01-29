@@ -4,8 +4,10 @@ import { baseURL } from "@/utils/constants";
 import axios from "axios";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
+import toast from "react-hot-toast";
 
 export type FormState = {
+  success: boolean;
   errors: {
     message: undefined;
   };
@@ -83,26 +85,38 @@ export const addUser = async (prevState: FormState, formData: FormData) => {
     .request(config)
     .then((response) => {
       if (response.status === 200 || response.status === 201) {
-        redirect("/users");
-        revalidatePath("/users");
+        console.log("success");
+        return {
+          success: true,
+          errors: {
+            message: null,
+          },
+        };
       }
     })
     .catch((error: any) => {
       if (error?.response?.data?.error) {
         return {
+          success: false,
           errors: {
             message: error?.response.data.error,
           },
         };
       } else {
         return {
+          success: false,
           errors: { message: error?.message },
         };
       }
     });
-
-  return result;
+  if (result?.success) {
+    redirect("/users");
+    // revalidatePath("/users");
+  } else {
+    return result;
+  }
 };
+
 export const addEnding = async (formData: any) => {
   const { text } = Object.fromEntries(formData);
   try {

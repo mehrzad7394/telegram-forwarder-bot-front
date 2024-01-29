@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 
 const UserForm = () => {
   const [state, formAction] = useFormState(addUser, {
+    success: false,
     errors: {
       message: undefined,
     },
@@ -84,7 +85,12 @@ export default UserForm;
 export function SubmitButton({ title }: { title: string }) {
   const { pending } = useFormStatus();
   return (
-    <Button color="primary" className="self-center w-1/6" type="submit" isDisabled={pending}>
+    <Button
+      color="primary"
+      className="self-center w-1/6"
+      type="submit"
+      isDisabled={pending}
+    >
       {pending ? `${title}...` : title}
     </Button>
   );
