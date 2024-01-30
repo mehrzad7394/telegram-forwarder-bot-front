@@ -4,12 +4,11 @@ import { baseURL } from "@/utils/constants";
 import axios from "axios";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
-import toast from "react-hot-toast";
 
 export type FormState = {
-  success: boolean;
+  success: boolean | undefined;
   errors: {
-    message: undefined;
+    message: string | undefined;
   };
 };
 export async function login(prevState: FormState, formData: FormData) {
@@ -85,7 +84,6 @@ export const addUser = async (prevState: FormState, formData: FormData) => {
     .request(config)
     .then((response) => {
       if (response.status === 200 || response.status === 201) {
-        console.log("success");
         return {
           success: true,
           errors: {
@@ -111,23 +109,114 @@ export const addUser = async (prevState: FormState, formData: FormData) => {
     });
   if (result?.success) {
     redirect("/users");
-    // revalidatePath("/users");
   } else {
     return result;
   }
 };
 
 export const addEnding = async (formData: any) => {
+  "use server";
   const { text } = Object.fromEntries(formData);
-  try {
-    console.log(text);
-  } catch (error) {}
+  const jwt = cookies().get("jwt")?.value || "";
+  let data = JSON.stringify({
+    value: text,
+  });
+
+  let config = {
+    method: "post",
+    url: `${baseURL}end`,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json",
+      token: jwt as string,
+    },
+
+    data: data,
+  };
+  const result = await axios
+    .request(config)
+    .then((response) => {
+      if (response.status === 200 || response.status === 201) {
+        return {
+          success: true,
+          errors: {
+            message: null,
+          },
+        };
+      }
+    })
+    .catch((error: any) => {
+      if (error?.response?.data?.error) {
+        return {
+          success: false,
+          errors: {
+            message: error?.response.data.error,
+          },
+        };
+      } else {
+        return {
+          success: false,
+          errors: { message: error?.message },
+        };
+      }
+    });
+  if (result?.success) {
+    redirect("/endings");
+  } else {
+    return result;
+  }
 };
 export const addFilter = async (formData: any) => {
+  "use server";
   const { text } = Object.fromEntries(formData);
-  try {
-    console.log(text);
-  } catch (error) {}
+  const jwt = cookies().get("jwt")?.value || "";
+  let data = JSON.stringify({
+    value: text,
+  });
+
+  let config = {
+    method: "post",
+    url: `${baseURL}filters`,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json",
+      token: jwt as string,
+    },
+
+    data: data,
+  };
+  const result = await axios
+    .request(config)
+    .then((response) => {
+      if (response.status === 200 || response.status === 201) {
+        return {
+          success: true,
+          errors: {
+            message: null,
+          },
+        };
+      }
+    })
+    .catch((error: any) => {
+      if (error?.response?.data?.error) {
+        return {
+          success: false,
+          errors: {
+            message: error?.response.data.error,
+          },
+        };
+      } else {
+        return {
+          success: false,
+          errors: { message: error?.message },
+        };
+      }
+    });
+  if (result?.success) {
+    redirect("/filters");
+  } else {
+    return result;
+  }
 };
 
 export async function getUserInfo() {
@@ -206,6 +295,91 @@ export async function getUsers() {
     });
   return result;
 }
+export async function deleteUserByID(id: string) {
+  "use server";
+
+  const jwt = cookies().get("jwt")?.value || "";
+  let config = {
+    method: "delete",
+    url: `${baseURL}user/${id}`,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json",
+      token: jwt as string,
+    },
+  };
+  await axios
+    .request(config)
+    .then((response) => {
+      if (response.status === 200 || response.status === 201) {
+        revalidatePath("/en/user");
+      }
+    })
+    .catch((error: any) => {
+      if (error?.response?.data?.error) {
+        // toast.error(error?.response.data.error);
+      } else {
+        // toast.error(error?.message);
+      }
+    });
+}
+export async function deleteFilterByID(id: string) {
+  "use server";
+
+  const jwt = cookies().get("jwt")?.value || "";
+  let config = {
+    method: "delete",
+    url: `${baseURL}filters/${id}`,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json",
+      token: jwt as string,
+    },
+  };
+  await axios
+    .request(config)
+    .then((response) => {
+      if (response.status === 200 || response.status === 201) {
+        revalidatePath("/en/filters");
+      }
+    })
+    .catch((error: any) => {
+      if (error?.response?.data?.error) {
+        // toast.error(error?.response.data.error);
+      } else {
+        // toast.error(error?.message);
+      }
+    });
+}
+export async function deleteEndByID(id: string) {
+  "use server";
+
+  const jwt = cookies().get("jwt")?.value || "";
+  let config = {
+    method: "delete",
+    url: `${baseURL}end/${id}`,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json",
+      token: jwt as string,
+    },
+  };
+  await axios
+    .request(config)
+    .then((response) => {
+      if (response.status === 200 || response.status === 201) {
+        revalidatePath("/en/end");
+      }
+    })
+    .catch((error: any) => {
+      if (error?.response?.data?.error) {
+        // toast.error(error?.response.data.error);
+      } else {
+        // toast.error(error?.message);
+      }
+    });
+}
+
 export async function getEnds() {
   "use server";
 

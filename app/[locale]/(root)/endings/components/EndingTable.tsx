@@ -5,13 +5,15 @@ import {
   TableColumn,
   TableBody,
   TableRow,
-  TableCell,} from "@nextui-org/react";
+  TableCell,
+} from "@nextui-org/react";
 import { DeleteIcon } from "@/components/icons/DeleteIcon";
 import { EditIcon } from "@/components/icons/EditIcon";
+import { deleteEndByID } from "@/lib/actions";
 type propTypes = {
   columns: Array<{ name: string; title: string }>;
   data: Array<{
-    id: string;
+    _id: string;
     value: string;
   }>;
 };
@@ -35,7 +37,10 @@ const EndingTable = ({ columns, data }: propTypes) => {
                 <EditIcon />
               </span>
 
-              <span className="text-lg text-danger cursor-pointer active:opacity-50">
+              <span
+                className="text-lg text-danger cursor-pointer active:opacity-50"
+                onClick={() => deleteEndByID(user._id)}
+              >
                 <DeleteIcon />
               </span>
             </TableCell>

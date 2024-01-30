@@ -1,10 +1,6 @@
 import UserForm from "@/components/userForm/UserForm";
 import { pick } from "lodash";
-import {
-  NextIntlClientProvider,
-  useMessages,
-  
-} from "next-intl";
+import { NextIntlClientProvider, useMessages } from "next-intl";
 import { unstable_setRequestLocale } from "next-intl/server";
 import React from "react";
 type Props = {

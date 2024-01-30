@@ -13,7 +13,7 @@ const UserForm = () => {
     errors: {
       message: undefined,
     },
-  } as FormState);
+  } as FormState );
   if (state?.errors?.message) {
     toast.error(state?.errors?.message);
   }

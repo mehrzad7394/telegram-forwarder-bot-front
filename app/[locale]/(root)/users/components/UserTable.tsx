@@ -7,16 +7,10 @@ import {
   TableRow,
   TableCell,
 } from "@nextui-org/react";
-
 import { DeleteIcon } from "@/components/icons/DeleteIcon";
 import { EditIcon } from "@/components/icons/EditIcon";
-import { cookies } from "next/headers";
-import { baseURL } from "@/utils/constants";
-import axios from "axios";
-import { revalidatePath } from "next/cache";
-import toast from "react-hot-toast";
-import { handleClickDelete } from "@/lib/actions";
-import { getCookie } from "@/utils/constants";
+import { deleteUserByID } from "@/lib/actions";
+import { Link } from "@/navigation";
 type propTypes = {
   columns: Array<{ name: string; title: string }>;
   data: Array<{
@@ -30,33 +24,6 @@ type propTypes = {
 };
 
 const UserTable = ({ columns, data }: propTypes) => {
-  console.log(data);
-  const handleClickDelete = async (id: string) => {
-    console.log(id);
-    let config = {
-      method: "delete",
-      url: `${baseURL}user/${id}`,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json",
-        token: getCookie("jwt") as string,
-      },
-    };
-    await axios
-      .request(config)
-      .then((response) => {
-        if (response.status === 200 || response.status === 201) {
-          revalidatePath("/user");
-        }
-      })
-      .catch((error: any) => {
-        if (error?.response?.data?.error) {
-          toast.error(error?.response.data.error);
-        } else {
-          toast.error(error?.message);
-        }
-      });
-  };
   return (
     <Table aria-label="Example static collection table" fullWidth>
       <TableHeader>
@@ -77,13 +44,19 @@ const UserTable = ({ columns, data }: propTypes) => {
               {user?.isAdmin ? "Admin" : "User"}
             </TableCell>
             <TableCell className="text-center flex justify-center items-center gap-5">
-              <span className="text-lg text-orange-400 cursor-pointer active:opacity-50">
+              <span
+                // href={{
+                //   pathname: "/users/add",
+                //   query: { id: user?._id },
+                // }}
+                className="text-lg text-orange-400 cursor-pointer active:opacity-50"
+              >
                 <EditIcon />
               </span>
 
               <span
                 className="text-lg text-danger cursor-pointer active:opacity-50"
-                onClick={() => handleClickDelete(user._id)}
+                onClick={() => deleteUserByID(user._id)}
               >
                 <DeleteIcon />
               </span>
